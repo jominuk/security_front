@@ -1,1 +1,1 @@
-# Spring-boot Securoty 뼈대 구성
+# Spring-boot Security 뼈대 구성
