@@ -23,6 +23,7 @@ export interface MemberType {
   userId: string;
   password: string;
   accessToken?: string;
+  refreshToken?: string;
 }
 
 export async function loginMember(formData: MemberType): Promise<MemberType> {
@@ -40,8 +41,6 @@ export async function loginMember(formData: MemberType): Promise<MemberType> {
   }
 
   const data = await response.json();
-  const accessToken = data.accessToken;
-  console.log(accessToken);
 
-  return { ...data, accessToken };
+  return { ...data };
 }

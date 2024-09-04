@@ -30,6 +30,7 @@ const page = () => {
 
       // 토큰을 sessionStorage에 저장
       sessionStorage.setItem("token", result.accessToken || "");
+      sessionStorage.setItem("refreshToken", result.refreshToken || "");
 
       alert("로그인 성공!");
 
