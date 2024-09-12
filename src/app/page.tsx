@@ -22,23 +22,27 @@ const page = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
 
     try {
-      // loginMember 호출 후 결과에서 accessToken을 추출
       const result = await loginMember(formData);
 
-      // 토큰을 sessionStorage에 저장
       sessionStorage.setItem("token", result.accessToken || "");
       sessionStorage.setItem("refreshToken", result.refreshToken || "");
 
       alert("로그인 성공!");
-
-      // 페이지 이동
       router.push("/list");
     } catch (error: any) {
-      // 에러 처리
-      setError(error.message.replace(/^Error:\s*/, ""));
+      // 에러 메시지를 alert으로 표시
+      let errorMessage = "로그인에 실패했습니다.";
+      if (error.message) {
+        try {
+          const parsedError = JSON.parse(error.message);
+          errorMessage = parsedError.error || errorMessage;
+        } catch {
+          errorMessage = error.message;
+        }
+      }
+      alert(errorMessage);
     }
   };
 
