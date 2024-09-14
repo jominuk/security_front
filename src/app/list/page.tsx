@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@/components/Modal";
 import { getList, postList } from "@/api/listApi";
+import { useRouter } from "next/navigation";
 
 export type ListType = {
   id: number;
@@ -12,13 +13,14 @@ export type ListType = {
 };
 
 const Page: React.FC = () => {
+  const router = useRouter();
+
   const [listItems, setListItems] = useState<ListType[]>([]);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const token = sessionStorage.getItem("token") || "";
-
       try {
         const data = await getList(token);
         setListItems(data);
@@ -43,9 +45,14 @@ const Page: React.FC = () => {
     }
   };
 
+  const myInfoHandler = () => {
+    router.push("/myInfo");
+  };
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Member List</h1>
+
+      <button onClick={myInfoHandler}>내 정보</button>
 
       <div className="flex justify-center mb-6">
         <button

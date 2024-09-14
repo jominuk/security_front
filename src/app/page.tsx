@@ -1,14 +1,16 @@
 "use client";
 
-import { loginMember, MemberType } from "@/api/memberApi";
+import { loginMember, LoginMemberType } from "@/api/memberApi";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const page = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState<MemberType>({
+
+  const [formData, setFormData] = useState<LoginMemberType>({
     userId: "",
     password: "",
+    accessToken: "",
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -26,13 +28,13 @@ const page = () => {
     try {
       const result = await loginMember(formData);
 
-      sessionStorage.setItem("token", result.accessToken || "");
+      sessionStorage.setItem("token", result.accessToken);
       sessionStorage.setItem("refreshToken", result.refreshToken || "");
+      sessionStorage.setItem("userId", result.userId);
 
       alert("로그인 성공!");
       router.push("/list");
     } catch (error: any) {
-      // 에러 메시지를 alert으로 표시
       let errorMessage = "로그인에 실패했습니다.";
       if (error.message) {
         try {

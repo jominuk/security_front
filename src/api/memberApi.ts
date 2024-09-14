@@ -1,3 +1,4 @@
+// 회원가입
 export interface memberType {
   userId: string;
   password: string;
@@ -19,14 +20,17 @@ export async function postMember(formData: memberType): Promise<void> {
   }
 }
 
-export interface MemberType {
+// 로그인
+export interface LoginMemberType {
   userId: string;
   password: string;
-  accessToken?: string;
+  accessToken: string;
   refreshToken?: string;
 }
 
-export async function loginMember(formData: MemberType): Promise<MemberType> {
+export async function loginMember(
+  formData: LoginMemberType
+): Promise<LoginMemberType> {
   const response = await fetch("http://localhost:8080/member/", {
     method: "POST",
     headers: {
@@ -43,4 +47,18 @@ export async function loginMember(formData: MemberType): Promise<MemberType> {
   const data = await response.json();
 
   return { ...data };
+}
+
+export async function deletemMember(token: string, id: number): Promise<void> {
+  const response = await fetch(`http://localhost:8080/member/delete/id=${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
 }
