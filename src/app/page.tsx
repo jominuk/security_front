@@ -1,6 +1,7 @@
 "use client";
 
-import { loginMember, LoginMemberType } from "@/api/memberApi";
+import { loginMember } from "@/api/memberApi";
+import { LoginMemberType } from "@/types/userType";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 

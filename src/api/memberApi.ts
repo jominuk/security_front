@@ -1,11 +1,7 @@
-// 회원가입
-export interface memberType {
-  userId: string;
-  password: string;
-  memo?: string;
-}
+import { JoinMemberType, LoginMemberType } from "@/types/userType";
 
-export async function postMember(formData: memberType): Promise<void> {
+// 회원가입
+export async function postMember(formData: JoinMemberType): Promise<void> {
   const response = await fetch("http://localhost:8080/member/save", {
     method: "POST",
     headers: {
@@ -21,13 +17,6 @@ export async function postMember(formData: memberType): Promise<void> {
 }
 
 // 로그인
-export interface LoginMemberType {
-  userId: string;
-  password: string;
-  accessToken: string;
-  refreshToken?: string;
-}
-
 export async function loginMember(
   formData: LoginMemberType
 ): Promise<LoginMemberType> {
@@ -49,7 +38,8 @@ export async function loginMember(
   return { ...data };
 }
 
-export async function deletemMember(token: string, id: number): Promise<void> {
+// 회원 탈퇴
+export async function deleteMember(token: string, id: number): Promise<void> {
   const response = await fetch(`http://localhost:8080/member/delete/id=${id}`, {
     method: "DELETE",
     headers: {

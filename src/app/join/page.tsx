@@ -1,16 +1,15 @@
 "use client";
 
-import { memberType } from "@/api/memberApi";
 import React, { useState } from "react";
 import { postMember } from "@/api/memberApi";
 import { useRouter } from "next/navigation";
+import { JoinMemberType } from "@/types/userType";
 
 const page = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState<memberType>({
+  const [formData, setFormData] = useState<JoinMemberType>({
     userId: "",
     password: "",
-    memo: "",
   });
 
   const handleChange = (
