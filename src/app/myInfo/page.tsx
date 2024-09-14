@@ -1,18 +1,32 @@
 "use client";
 
-import { deleteMember } from "@/api/memberApi";
-import React from "react";
+import { deleteMember, myInfoMember } from "@/api/memberApi";
+import { GetMemberType } from "@/types/userType";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
-  const deleteMemberHandler = async () => {
-    const token = sessionStorage.getItem("token") || "";
-    const userId = sessionStorage.getItem("userId");
+  const [info, setInfo] = useState<GetMemberType>();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = sessionStorage.getItem("token") || "";
+      const userId = sessionStorage.getItem("userId") || "";
+
+      try {
+        const data = await myInfoMember(token, userId);
+        setInfo(data);
+        console.log(data);
+      } catch (error: any) {
+        const errorMessage = error.message.replace(/^Error:\s*/, "");
+        alert(errorMessage);
+      }
+    };
+    fetchData();
+  }, []);
+  const deleteMemberHandler = async () => {
     // try {
     //   const result = await deleteMember(token, userId);
-
     // } catch{
-    2;
     // }
   };
   return (

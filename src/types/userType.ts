@@ -17,4 +17,5 @@ export interface LoginMemberType {
 export interface GetMemberType {
   userId: string;
   accessToken: string;
+  memo?: string;
 }

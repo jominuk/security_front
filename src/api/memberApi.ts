@@ -1,4 +1,8 @@
-import { JoinMemberType, LoginMemberType } from "@/types/userType";
+import {
+  GetMemberType,
+  JoinMemberType,
+  LoginMemberType,
+} from "@/types/userType";
 
 // 회원가입
 export async function postMember(formData: JoinMemberType): Promise<void> {
@@ -36,6 +40,29 @@ export async function loginMember(
   const data = await response.json();
 
   return { ...data };
+}
+
+// 내 정보 가져오기
+export async function myInfoMember(
+  token: string,
+  userId: string
+): Promise<GetMemberType> {
+  const response = await fetch(
+    `http://localhost:8080/member/myInfo?userId=${userId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+  const data = await response.json();
+  return data;
 }
 
 // 회원 탈퇴
