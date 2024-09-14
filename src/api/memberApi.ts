@@ -66,13 +66,19 @@ export async function myInfoMember(
 }
 
 // 회원 탈퇴
-export async function deleteMember(token: string, id: number): Promise<void> {
-  const response = await fetch(`http://localhost:8080/member/delete/id=${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function deleteMember(
+  token: string,
+  userId: number | undefined
+): Promise<void> {
+  const response = await fetch(
+    `http://localhost:8080/member/delete?id=${userId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     const errorMessage = await response.text();

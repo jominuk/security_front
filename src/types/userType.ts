@@ -15,6 +15,7 @@ export interface LoginMemberType {
 
 // 내 정보
 export interface GetMemberType {
+  id: number;
   userId: string;
   accessToken: string;
   memo?: string;

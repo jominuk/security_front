@@ -2,9 +2,11 @@
 
 import { deleteMember, myInfoMember } from "@/api/memberApi";
 import { GetMemberType } from "@/types/userType";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const router = useRouter();
   const [info, setInfo] = useState<GetMemberType>();
 
   useEffect(() => {
@@ -15,7 +17,6 @@ const page = () => {
       try {
         const data = await myInfoMember(token, userId);
         setInfo(data);
-        console.log(data);
       } catch (error: any) {
         const errorMessage = error.message.replace(/^Error:\s*/, "");
         alert(errorMessage);
@@ -24,14 +25,20 @@ const page = () => {
     fetchData();
   }, []);
   const deleteMemberHandler = async () => {
-    // try {
-    //   const result = await deleteMember(token, userId);
-    // } catch{
-    // }
+    const token = sessionStorage.getItem("token") || "";
+    try {
+      await deleteMember(token, info?.id);
+      router.push("/");
+    } catch (error: any) {
+      const errorMessage = error.message.replace(/^Error:\s*/, "");
+      alert(errorMessage);
+    }
   };
   return (
     <>
       <button onClick={deleteMemberHandler}>회원 탈퇴</button>
+      <div>아이디 : {info?.userId}</div>
+      <div>메모 : {info?.memo}</div>
     </>
   );
 };
