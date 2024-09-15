@@ -1,9 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Modal from "@/components/Modal";
+import Modal from "@/components/modal/Modal";
 import { getList, postList } from "@/api/listApi";
 import { useRouter } from "next/navigation";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+import { useJwt } from "@/components/hooks/useJwt";
+
+interface CustomJwtPayload extends JwtPayload {
+  role?: string;
+}
 
 export type ListType = {
   id: number;
@@ -14,6 +20,7 @@ export type ListType = {
 
 const Page: React.FC = () => {
   const router = useRouter();
+  const userRole = useJwt();
 
   const [listItems, setListItems] = useState<ListType[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -53,6 +60,12 @@ const Page: React.FC = () => {
       <h1 className="text-3xl font-bold mb-8 text-center">Member List</h1>
 
       <button onClick={myInfoHandler}>내 정보</button>
+
+      {userRole === "ADMIN" && (
+        <button className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+          관리자 버튼
+        </button>
+      )}
 
       <div className="flex justify-center mb-6">
         <button
