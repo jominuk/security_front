@@ -69,7 +69,7 @@ export async function myInfoMember(
 export async function deleteMember(
   token: string,
   userId: number | undefined
-): Promise<void> {
+): Promise<string> {
   const response = await fetch(
     `http://localhost:8080/member/delete?id=${userId}`,
     {
@@ -84,4 +84,5 @@ export async function deleteMember(
     const errorMessage = await response.text();
     throw new Error(errorMessage);
   }
+  return await response.text();
 }

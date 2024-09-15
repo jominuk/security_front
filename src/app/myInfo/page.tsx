@@ -24,10 +24,12 @@ const page = () => {
     };
     fetchData();
   }, []);
+
   const deleteMemberHandler = async () => {
     const token = sessionStorage.getItem("token") || "";
     try {
-      await deleteMember(token, info?.id);
+      const res = await deleteMember(token, info?.id);
+      alert(res);
       router.push("/");
     } catch (error: any) {
       const errorMessage = error.message.replace(/^Error:\s*/, "");
