@@ -1,29 +1,33 @@
 "use client";
 
 import { deleteMember, myInfoMember } from "@/api/memberApi";
+import { useJwt } from "@/components/hooks/useJwt";
 import { GetMemberType } from "@/types/userType";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
   const router = useRouter();
+  const { userId } = useJwt();
+
   const [info, setInfo] = useState<GetMemberType>();
 
   useEffect(() => {
     const fetchData = async () => {
       const token = sessionStorage.getItem("token") || "";
-      const userId = sessionStorage.getItem("userId") || "";
 
-      try {
-        const data = await myInfoMember(token, userId);
-        setInfo(data);
-      } catch (error: any) {
-        const errorMessage = error.message.replace(/^Error:\s*/, "");
-        alert(errorMessage);
+      if (userId) {
+        try {
+          const data = await myInfoMember(token, userId);
+          setInfo(data);
+        } catch (error: any) {
+          const errorMessage = error.message.replace(/^Error:\s*/, "");
+          alert(errorMessage);
+        }
       }
     };
     fetchData();
-  }, []);
+  }, [userId]);
 
   const deleteMemberHandler = async () => {
     const token = sessionStorage.getItem("token") || "";

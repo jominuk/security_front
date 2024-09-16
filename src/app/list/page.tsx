@@ -4,12 +4,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "@/components/modal/Modal";
 import { getList, postList } from "@/api/listApi";
 import { useRouter } from "next/navigation";
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import { JwtPayload } from "jwt-decode";
 import { useJwt } from "@/components/hooks/useJwt";
-
-interface CustomJwtPayload extends JwtPayload {
-  role?: string;
-}
 
 export type ListType = {
   id: number;
@@ -20,7 +16,7 @@ export type ListType = {
 
 const Page: React.FC = () => {
   const router = useRouter();
-  const userRole = useJwt();
+  const { userRole } = useJwt();
 
   const [listItems, setListItems] = useState<ListType[]>([]);
   const [showModal, setShowModal] = useState(false);
