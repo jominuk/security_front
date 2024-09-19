@@ -44,8 +44,8 @@ const page = () => {
   const handleEdit = () => {};
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8 space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl">
         <h2 className="text-center text-2xl font-extrabold text-gray-900">
           내 정보
         </h2>
@@ -70,7 +70,7 @@ const page = () => {
           </button>
           <button
             onClick={handleEdit}
-            className="w-full ml-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full ml-4 bg-btn-primary hover:bg-btn-hover text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             회원 수정
           </button>
