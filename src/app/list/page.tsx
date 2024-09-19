@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Modal from "@/components/modal/Modal";
 import { getList, postList } from "@/api/listApi";
 import { useRouter } from "next/navigation";
-import { JwtPayload } from "jwt-decode";
 import { useJwt } from "@/components/hooks/useJwt";
 
 export type ListType = {
@@ -16,7 +15,7 @@ export type ListType = {
 
 const Page: React.FC = () => {
   const router = useRouter();
-  const { userRole } = useJwt();
+  const { userRole, userId } = useJwt();
 
   const [listItems, setListItems] = useState<ListType[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -39,7 +38,7 @@ const Page: React.FC = () => {
   const handleSave = async (title: string, content: string) => {
     const token = sessionStorage.getItem("token") || "";
     try {
-      await postList(token, title, content);
+      await postList(token, title, content, userId);
       alert("게시글이 등록 되었습니다.");
       window.location.reload();
     } catch (error: any) {

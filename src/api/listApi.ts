@@ -1,13 +1,18 @@
 import { ListType } from "@/app/list/page";
 
-export async function postList(token: string, title: string, content: string) {
+export async function postList(
+  token: string,
+  title: string,
+  content: string,
+  userId: string
+) {
   const response = await fetch("http://localhost:8080/list/post", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, content }),
+    body: JSON.stringify({ title, content, userId }),
   });
 
   if (!response.ok) {
