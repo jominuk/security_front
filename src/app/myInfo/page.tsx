@@ -40,12 +40,43 @@ const page = () => {
       alert(errorMessage);
     }
   };
+
+  const handleEdit = () => {};
+
   return (
-    <>
-      <button onClick={deleteMemberHandler}>회원 탈퇴</button>
-      <div>아이디 : {info?.userId}</div>
-      <div>메모 : {info?.memo}</div>
-    </>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8 space-y-6">
+        <h2 className="text-center text-2xl font-extrabold text-gray-900">
+          내 정보
+        </h2>
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm font-medium text-gray-700">
+              아이디 : {info?.userId}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-700">
+              메모 : {info?.memo}
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-between mt-6">
+          <button
+            onClick={deleteMemberHandler}
+            className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          >
+            회원 탈퇴
+          </button>
+          <button
+            onClick={handleEdit}
+            className="w-full ml-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            회원 수정
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
