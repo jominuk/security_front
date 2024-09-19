@@ -31,7 +31,6 @@ const page = () => {
 
       sessionStorage.setItem("token", result.accessToken);
       sessionStorage.setItem("refreshToken", result.refreshToken || "");
-      sessionStorage.setItem("userId", result.userId);
 
       alert("로그인 성공!");
       router.push("/list");
