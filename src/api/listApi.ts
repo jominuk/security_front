@@ -21,13 +21,19 @@ export async function postList(
   }
 }
 
-export async function getList(token: string): Promise<ListType[]> {
-  const response = await fetch("http://localhost:8080/list/get", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function getList(
+  token: string,
+  userId: string
+): Promise<ListType[]> {
+  const response = await fetch(
+    `http://localhost:8080/list/get?userId=${userId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     const errorMessage = await response.text();

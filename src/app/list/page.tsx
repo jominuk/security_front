@@ -23,17 +23,19 @@ const Page: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = sessionStorage.getItem("token") || "";
-      try {
-        const data = await getList(token);
-        setListItems(data);
-      } catch (error: any) {
-        const errorMessage = error.message.replace(/^Error:\s*/, "");
-        alert(errorMessage);
+      if (userId) {
+        try {
+          const data = await getList(token, userId);
+          setListItems(data);
+        } catch (error: any) {
+          const errorMessage = error.message.replace(/^Error:\s*/, "");
+          alert(errorMessage);
+        }
       }
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   const handleSave = async (title: string, content: string) => {
     const token = sessionStorage.getItem("token") || "";
@@ -50,11 +52,19 @@ const Page: React.FC = () => {
   const myInfoHandler = () => {
     router.push("/myInfo");
   };
+
+  const logoutHandler = () => {
+    sessionStorage.clear();
+    router.push("/");
+  };
+
+  console.log(listItems);
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Member List</h1>
 
       <button onClick={myInfoHandler}>내 정보</button>
+      <button onClick={logoutHandler}>로그아웃</button>
 
       {userRole === "ADMIN" && (
         <button className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
@@ -82,7 +92,7 @@ const Page: React.FC = () => {
             </h2>
             <p className="text-gray-700 mb-4">{item.content}</p>
             <p className="text-gray-500 text-sm">
-              Created on: {new Date(item.createDate).toLocaleDateString()}
+              Created on: {new Date(item.createDate).toLocaleString()}
             </p>
           </div>
         ))}
