@@ -6,7 +6,7 @@ type ModalProps = {
   onSave: (title: string, content: string) => void;
 };
 
-const Modal: FC<ModalProps> = ({ show, onClose, onSave }) => {
+const ListPostCreateModal: FC<ModalProps> = ({ show, onClose, onSave }) => {
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
 
@@ -22,7 +22,7 @@ const Modal: FC<ModalProps> = ({ show, onClose, onSave }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg max-w-md w-full">
-        <h2 className="text-xl font-bold mb-4">Add New Item</h2>
+        <h2 className="text-xl font-bold mb-4">게시글 작성</h2>
         <input
           type="text"
           className="w-full p-2 border rounded mb-4"
@@ -55,4 +55,4 @@ const Modal: FC<ModalProps> = ({ show, onClose, onSave }) => {
   );
 };
 
-export default Modal;
+export default ListPostCreateModal;

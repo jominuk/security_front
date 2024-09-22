@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Modal from "@/components/modal/Modal";
+import ListPostCreateModal from "@/components/modal/ListPostCreateModal";
 import { getList, postList } from "@/api/listApi";
 import { useRouter } from "next/navigation";
 import { useJwt } from "@/components/hooks/useJwt";
@@ -20,20 +20,20 @@ const Page: React.FC = () => {
   const [listItems, setListItems] = useState<ListType[]>([]);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = sessionStorage.getItem("token") || "";
-      if (userId) {
-        try {
-          const data = await getList(token, userId);
-          setListItems(data);
-        } catch (error: any) {
-          const errorMessage = error.message.replace(/^Error:\s*/, "");
-          alert(errorMessage);
-        }
+  const fetchData = async () => {
+    const token = sessionStorage.getItem("token") || "";
+    if (userId) {
+      try {
+        const data = await getList(token, userId);
+        setListItems(data);
+      } catch (error: any) {
+        const errorMessage = error.message.replace(/^Error:\s*/, "");
+        alert(errorMessage);
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [userId]);
 
@@ -41,8 +41,7 @@ const Page: React.FC = () => {
     const token = sessionStorage.getItem("token") || "";
     try {
       await postList(token, title, content, userId);
-      alert("게시글이 등록 되었습니다.");
-      window.location.reload();
+      fetchData();
     } catch (error: any) {
       const errorMessage = error.message.replace(/^Error:\s*/, "");
       alert(errorMessage);
@@ -58,13 +57,24 @@ const Page: React.FC = () => {
     router.push("/");
   };
 
-  console.log(listItems);
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Member List</h1>
 
-      <button onClick={myInfoHandler}>내 정보</button>
-      <button onClick={logoutHandler}>로그아웃</button>
+      <div className="flex justify-between mb-6 space-x-4">
+        <button
+          onClick={myInfoHandler}
+          className="bg-btn-primary text-white rounded-lg shadow-lg hover:bg-btn-hover transition px-4 py-2"
+        >
+          내 정보
+        </button>
+        <button
+          onClick={logoutHandler}
+          className="bg-btn-primary text-white rounded-lg shadow-lg hover:bg-btn-hover transition px-4 py-2"
+        >
+          로그아웃
+        </button>
+      </div>
 
       {userRole === "ADMIN" && (
         <button className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
@@ -77,7 +87,7 @@ const Page: React.FC = () => {
           onClick={() => setShowModal(true)}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition"
         >
-          Add New Item
+          게시글 작성
         </button>
       </div>
 
@@ -98,7 +108,7 @@ const Page: React.FC = () => {
         ))}
       </div>
 
-      <Modal
+      <ListPostCreateModal
         show={showModal}
         onClose={() => setShowModal(false)}
         onSave={handleSave}

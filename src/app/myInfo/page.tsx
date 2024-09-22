@@ -1,7 +1,9 @@
 "use client";
 
+import { updateList } from "@/api/listApi";
 import { deleteMember, myInfoMember } from "@/api/memberApi";
 import { useJwt } from "@/components/hooks/useJwt";
+import ListUpdateModal from "@/components/modal/ListUpdateModal";
 import { GetMemberType } from "@/types/userType";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -11,6 +13,7 @@ const page = () => {
   const { userId } = useJwt();
 
   const [info, setInfo] = useState<GetMemberType>();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +44,21 @@ const page = () => {
     }
   };
 
-  const handleEdit = () => {};
+  const handleEdit = async (password: string, memo: string) => {
+    const token = sessionStorage.getItem("token") || "";
+    if (info?.id) {
+      try {
+        await updateList(token, info.id, password, memo);
+        alert("회원 정보가 수정되었습니다.");
+        setShowModal(false);
+        // const updatedData = await myInfoMember(token, userId);
+        // setInfo(updatedData);
+      } catch (error: any) {
+        const errorMessage = error.message.replace(/^Error:\s*/, "");
+        alert(errorMessage);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -68,12 +85,19 @@ const page = () => {
           >
             회원 탈퇴
           </button>
+
           <button
-            onClick={handleEdit}
+            onClick={() => setShowModal(true)}
             className="w-full ml-4 bg-btn-primary hover:bg-btn-hover text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             회원 수정
           </button>
+
+          <ListUpdateModal
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            onSave={handleEdit}
+          />
         </div>
       </div>
     </div>
