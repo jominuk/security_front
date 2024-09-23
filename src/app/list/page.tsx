@@ -57,6 +57,9 @@ const Page: React.FC = () => {
     router.push("/");
   };
 
+  const adminHandler = () => {
+    router.push("/admin/memberList");
+  };
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Member List</h1>
@@ -77,8 +80,11 @@ const Page: React.FC = () => {
       </div>
 
       {userRole === "ADMIN" && (
-        <button className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
-          관리자 버튼
+        <button
+          className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition"
+          onClick={adminHandler}
+        >
+          회원 목록
         </button>
       )}
 
