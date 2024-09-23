@@ -17,6 +17,14 @@ export interface LoginMemberType {
 export interface GetMemberType {
   id: number;
   userId: string;
-  accessToken: string;
-  memo?: string;
+  memo: string;
+}
+
+//관리자 맴버 리스트 타입
+export interface GetAdminMemberType {
+  id: number;
+  userId: string;
+  memo: string;
+  createdAt: string;
+  updatedAt: string;
 }
