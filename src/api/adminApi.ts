@@ -3,7 +3,7 @@ import { GetAdminMemberType } from "@/types/userType";
 export async function getAdminMember(
   token: string
 ): Promise<GetAdminMemberType[]> {
-  const response = await fetch("http://localhost:8080/member/admin/member", {
+  const response = await fetch("http://localhost:8080/admin/member", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
