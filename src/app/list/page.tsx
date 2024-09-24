@@ -58,7 +58,7 @@ const Page: React.FC = () => {
   };
 
   const adminHandler = () => {
-    router.push("/admin/memberList");
+    router.push(`/admin/memberList?pageSize=10&page=1`);
   };
   return (
     <div className="container mx-auto p-4">

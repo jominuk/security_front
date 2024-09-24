@@ -1,11 +1,12 @@
-import { GetAdminMemberType } from "@/types/userType";
+import { AdminMemberResponse } from "@/types/userType";
 
 export async function getAdminMember(
   token: string,
-  pageSize: number
-): Promise<GetAdminMemberType[]> {
+  pageSize: number,
+  page: number
+): Promise<AdminMemberResponse> {
   const response = await fetch(
-    `http://localhost:8080/admin/member?pageSize=${pageSize}`,
+    `http://localhost:8080/admin/member?pageSize=${pageSize}&page=${page}`,
     {
       method: "GET",
       headers: {
@@ -19,6 +20,6 @@ export async function getAdminMember(
     throw new Error(errorMessage);
   }
 
-  const data = await response.json();
+  const data: AdminMemberResponse = await response.json();
   return data;
 }
