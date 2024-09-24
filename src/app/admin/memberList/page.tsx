@@ -4,24 +4,33 @@ import React, { useEffect, useState } from "react";
 import { GetAdminMemberType } from "@/types/userType";
 import { getAdminMember } from "@/api/adminApi";
 import FormattedDateTime from "@/components/utils/DateFormatter";
+import Dropdown from "@/components/common/Dropdown";
 
 const Page = () => {
   const [users, setUsers] = useState<GetAdminMemberType[]>([]);
-
-  console.log(users);
+  const [userLimit, setUserLimit] = useState<number>(10);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token") || "";
-    getAdminMember(token)
+    getAdminMember(token, userLimit)
       .then((data) => setUsers(data))
       .catch(async (error: any) => {
-        const errorMessage = await error.message.replace(/^Error:\s*/, "");
+        await error.message.replace(/^Error:\s*/, "");
       });
-  }, []);
+  }, [userLimit]);
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Member List</h1>
+
+      <div className="mb-4">
+        <Dropdown
+          options={[10, 30, 50]}
+          selectedLimit={userLimit}
+          onChange={setUserLimit}
+        />
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead>

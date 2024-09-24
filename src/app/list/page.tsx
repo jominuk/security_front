@@ -62,7 +62,7 @@ const Page: React.FC = () => {
   };
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">Member List</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Post List</h1>
 
       <div className="flex justify-between mb-6 space-x-4">
         <button
