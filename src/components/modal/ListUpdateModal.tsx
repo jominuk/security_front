@@ -11,9 +11,9 @@ const ListUpdateModal: FC<ListUpdateModalProps> = ({
 
   const handleSave = () => {
     onSave(password, memo);
-    setPassword(""); // 입력 필드 초기화
-    setMemo(""); // 입력 필드 초기화
-    onClose(); // 모달 닫기
+    setPassword("");
+    setMemo("");
+    onClose();
   };
 
   if (!show) return null;

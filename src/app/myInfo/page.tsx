@@ -1,7 +1,6 @@
 "use client";
 
-import { updateList } from "@/api/listApi";
-import { deleteMember, myInfoMember } from "@/api/memberApi";
+import { deleteMember, myInfoMember, updateMember } from "@/api/memberApi";
 import { useJwt } from "@/components/hooks/useJwt";
 import ListUpdateModal from "@/components/modal/ListUpdateModal";
 import { GetMemberType } from "@/types/userType";
@@ -48,11 +47,10 @@ const page = () => {
     const token = sessionStorage.getItem("token") || "";
     if (info?.id) {
       try {
-        await updateList(token, info.id, password, memo);
-        alert("회원 정보가 수정되었습니다.");
+        await updateMember(token, info.id, password, memo);
+        alert("회원 정보가 수정되었습니다. 로그인을 다시 시도해 주세요");
         setShowModal(false);
-        // const updatedData = await myInfoMember(token, userId);
-        // setInfo(updatedData);
+        router.push("/");
       } catch (error: any) {
         const errorMessage = error.message.replace(/^Error:\s*/, "");
         alert(errorMessage);

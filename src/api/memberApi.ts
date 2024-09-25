@@ -86,3 +86,28 @@ export async function deleteMember(
   }
   return await response.text();
 }
+
+//회원 수정
+export async function updateMember(
+  token: string,
+  id: number,
+  password: string,
+  memo: string
+) {
+  const response = await fetch(`http://localhost:8080/member/update?id=${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ password, memo }),
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.text();
+  return data;
+}

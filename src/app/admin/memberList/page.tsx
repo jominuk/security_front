@@ -55,12 +55,19 @@ const Page = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Member List</h1>
 
-      <div className="mb-4">
+      <div className="mb-4 flex justify-between">
         <Dropdown
           options={[10, 30, 50]}
           selectedLimit={pageSize}
           onChange={handlePageSizeChange}
         />
+
+        <button
+          className="ml-4 bg-btn-primary hover:bg-btn-hover text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => router.push("/list")}
+        >
+          게시글 목록
+        </button>
       </div>
 
       <div className="overflow-x-auto">

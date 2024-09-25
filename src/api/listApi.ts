@@ -1,5 +1,6 @@
 import { ListType } from "@/app/list/page";
 
+// 게시글 등록
 export async function postList(
   token: string,
   title: string,
@@ -21,6 +22,7 @@ export async function postList(
   }
 }
 
+// 게시글 목록
 export async function getList(
   token: string,
   userId: string
@@ -34,29 +36,6 @@ export async function getList(
       },
     }
   );
-
-  if (!response.ok) {
-    const errorMessage = await response.text();
-    throw new Error(errorMessage);
-  }
-
-  const data = await response.json();
-  return data;
-}
-
-export async function updateList(
-  token: string,
-  id: number,
-  password: string,
-  memo: string
-) {
-  const response = await fetch(`http://localhost:8080/list/update?id=${id}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ password, memo }),
-  });
 
   if (!response.ok) {
     const errorMessage = await response.text();

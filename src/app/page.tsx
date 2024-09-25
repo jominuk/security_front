@@ -48,10 +48,6 @@ const page = () => {
     }
   };
 
-  const handleJoin = () => {
-    router.push("/join");
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl">
@@ -114,7 +110,7 @@ const page = () => {
 
         <div className="text-center">
           <button
-            onClick={handleJoin}
+            onClick={() => router.push("/join")}
             className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
           >
             회원가입

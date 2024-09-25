@@ -48,25 +48,18 @@ const Page: React.FC = () => {
     }
   };
 
-  const myInfoHandler = () => {
-    router.push("/myInfo");
-  };
-
   const logoutHandler = () => {
     sessionStorage.clear();
     router.push("/");
   };
 
-  const adminHandler = () => {
-    router.push(`/admin/memberList?pageSize=10&page=1`);
-  };
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Post List</h1>
 
       <div className="flex justify-between mb-6 space-x-4">
         <button
-          onClick={myInfoHandler}
+          onClick={() => router.push("/myInfo")}
           className="bg-btn-primary text-white rounded-lg shadow-lg hover:bg-btn-hover transition px-4 py-2"
         >
           내 정보
@@ -82,7 +75,7 @@ const Page: React.FC = () => {
       {userRole === "ADMIN" && (
         <button
           className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition"
-          onClick={adminHandler}
+          onClick={() => router.push(`/admin/memberList?pageSize=10&page=1`)}
         >
           회원 목록
         </button>
