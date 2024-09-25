@@ -47,8 +47,8 @@ const page = () => {
     const token = sessionStorage.getItem("token") || "";
     if (info?.id) {
       try {
-        await updateMember(token, info.id, password, memo);
-        alert("회원 정보가 수정되었습니다. 로그인을 다시 시도해 주세요");
+        const response = await updateMember(token, info.id, password, memo);
+        alert(response);
         setShowModal(false);
         router.push("/");
       } catch (error: any) {
