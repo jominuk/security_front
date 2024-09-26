@@ -1,16 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { postMember } from "@/api/memberApi";
+import { postMember, userIdCheck } from "@/api/memberApi";
 import { useRouter } from "next/navigation";
 import { JoinMemberType } from "@/types/userType";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<JoinMemberType>({
     userId: "",
     password: "",
+    memo: "",
   });
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [idCheck, setIdCheck] = useState<boolean>(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -20,6 +23,7 @@ const page = () => {
       ...prevState,
       [name]: value,
     }));
+    setErrorMessage(""); // 입력 변경 시 에러 메시지 초기화
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +34,18 @@ const page = () => {
       router.push("/");
     } catch (error: any) {
       const errorMessage = error.message.replace(/^Error:\s*/, "");
-      alert(errorMessage);
+      setErrorMessage(errorMessage);
+    }
+  };
+
+  const handleIdCheck = async () => {
+    try {
+      await userIdCheck(formData.userId);
+      alert("사용 가능한 ID입니다.");
+      setErrorMessage("");
+    } catch (error: any) {
+      const errorMessage = error.message.replace(/^Error:\s*/, "");
+      setErrorMessage(errorMessage);
     }
   };
 
@@ -51,16 +66,25 @@ const page = () => {
               <label htmlFor="userId" className="sr-only">
                 사용자 ID
               </label>
-              <input
-                id="userId"
-                name="userId"
-                type="text"
-                required
-                className="appearance-none rounded-lg block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="사용자 ID"
-                value={formData.userId}
-                onChange={handleChange}
-              />
+              <div className="flex">
+                <input
+                  id="userId"
+                  name="userId"
+                  type="text"
+                  required
+                  className="appearance-none rounded-l-lg flex-grow px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="사용자 ID"
+                  value={formData.userId}
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  onClick={handleIdCheck}
+                  className="px-4 py-2 text-white rounded-r-lg bg-btn-primary hover:bg-btn-hover focus:outline-none focus:ring-2 duration-200"
+                >
+                  중복 확인
+                </button>
+              </div>
             </div>
             <div>
               <label htmlFor="password" className="sr-only">
@@ -93,10 +117,14 @@ const page = () => {
             </div>
           </div>
 
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+          )}
+
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-btn-primary  hover:bg-btn-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-btn-primary hover:bg-btn-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
             >
               회원가입
             </button>
@@ -107,4 +135,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

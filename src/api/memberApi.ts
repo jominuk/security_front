@@ -111,3 +111,20 @@ export async function updateMember(
   const data = await response.text();
   return data;
 }
+
+export async function userIdCheck(userId: string) {
+  const response = await fetch(
+    `http://localhost:8080/member/userId?userId=${userId}`,
+    {
+      method: "GET",
+    }
+  );
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.text();
+  return data;
+}
